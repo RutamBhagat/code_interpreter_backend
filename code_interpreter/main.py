@@ -1,4 +1,6 @@
+from tabnanny import verbose
 from dotenv import load_dotenv
+from langchain_core.tools import Tool
 from langchain_experimental.agents import create_csv_agent
 from langchain_openai import ChatOpenAI
 from langchain_experimental.agents.agent_toolkits import create_python_agent
@@ -49,9 +51,46 @@ def main():
 
     # csv_agent.invoke({"input": "Which season has the most episodes?"})
 
-    csv_agent.invoke(
+    # csv_agent.invoke(
+    #     {
+    #         "input": "Print seasons in ascending order of the number of episodes they have "
+    #     }
+    # )
+
+    agent_type = AgentType.OPENAI_FUNCTIONS
+    grand_agent = initialize_agent(
+        llm=llm,
+        verbose=True,
+        tools=[
+            Tool(
+                name="PythonAgent",
+                func=python_agent_executor.invoke,
+                description="""
+                Useful when you need to transform natural language and write from it python and execute the python code 
+                returning the results of the code execution, 
+                DO NOT SEND PYTHON  CODE TO THIS TOOL
+                """,
+            ),
+            Tool(
+                name="CSVAgent",
+                func=csv_agent.invoke,
+                description="""
+                Useful when you need to answer question over episode_info.csv file,
+                takes an input the entire query and returns the answer after running pandas calculations, 
+                """,
+            ),
+        ],
+    )
+
+    # grand_agent.invoke(
+    #     {
+    #         "input": "In current working directory, generate and save 15 QR codes that point to https://rutambhagat.carrd.co"
+    #     }
+    # )
+
+    grand_agent.invoke(
         {
-            "input": "Print seasons in ascending order of the number of episodes they have"
+            "input": "Print seasons in ascending order of the number of episodes they have "
         }
     )
 
