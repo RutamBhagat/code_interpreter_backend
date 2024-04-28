@@ -18,7 +18,7 @@ def main():
     )
     python_agent_executor.invoke(
         {
-            "input": "In current working directory, generate and save 15 QR codes that point to https://rutambhagat.carrd.co/"
+            "input": "In current working directory, generate and save 15 QR codes that point to https://rutambhagat.carrd.co"
         }
     )
 
