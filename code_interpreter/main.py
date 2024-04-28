@@ -37,8 +37,22 @@ def main():
         verbose=True,
     )
 
+    # csv_agent.invoke(
+    #     {"input": "How many columns are there in the episode-info.csv file?"}
+    # )
+
+    # csv_agent.invoke(
+    #     {
+    #         "input": "Which write wrote the least episodes? And how many episodes did he write? there can be multiple writers for the same episode, make sure you properly split them before counting"
+    #     }
+    # )
+
+    # csv_agent.invoke({"input": "Which season has the most episodes?"})
+
     csv_agent.invoke(
-        {"input": "How many columns are there in the episode-info.csv file?"}
+        {
+            "input": "Print seasons in ascending order of the number of episodes they have"
+        }
     )
 
 
